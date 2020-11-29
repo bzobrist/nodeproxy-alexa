@@ -305,7 +305,8 @@ function Rnet() {
   };
   this.setAllZones = function(state) {
     write([0xF0, 0x7E, 0x00, 0x7F, 0x00, 0x00, byteFlag, 0x05, 0x02, 0x02, 0x00, 0x00, 0xF1, 0x22, 0x00, (cseries) ? state : 0x00, (cseries) ? 0x00 : state, 0x00, 0x00, 0x01]);
-    notify_handler({type: 'zone', controller: -1, zone: -1, state: state});
+    sub_results = notify_handler({type: 'zone', controller: -1, zone: -1, state: state});
+    return(sub_results);
   };
 
   function zone_state(data) {
@@ -322,7 +323,8 @@ function Rnet() {
   };
 
   function zone_source(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], source: data[2], sourceName: nconf.get('rnet:sources')[data[2]]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], source: data[2], sourceName: nconf.get('rnet:sources')[data[2]]});
+    return(sub_results);
   }
   this.getZoneSource = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x04, 0x02, 0x00, zone, 0x02, 0x00, 0x00]);
@@ -330,11 +332,13 @@ function Rnet() {
   this.setZoneSource = function(controller, zone, source) {
     write([0xF0, controller, 0x00, 0x7F, controller, zone, byteFlag, 0x05, 0x02, 0x00, 0x00, 0x00, 0xF1, 0x3E, 0x00, 0x00, 0x00, source, 0x00, 0x01]);
     // TODO: NEED TO CHECK AND SEE IF SOURCES ARE TIED TO CONTROLLER
-    zone_source([controller, zone, source, nconf.get('rnet:sources')[source]]);
+    sub_results = zone_source([controller, zone, source, nconf.get('rnet:sources')[source]]);
+    return(sub_results);
   };
 
   function zone_volume(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], volume: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], volume: data[2]});
+    return(sub_results);
   }
   this.getZoneVolume = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x04, 0x02, 0x00, zone, 0x01, 0x00, 0x00]);
@@ -342,62 +346,73 @@ function Rnet() {
   this.setZoneVolume = function(controller, zone, volume) {
     write([0xF0, controller, (cseries) ? zone : 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x05, 0x02, 0x02, 0x00, 0x00, 0xF1, 0x21, 0x00, volume, 0x00, zone, 0x00, 0x01]);
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x00, 0x05, 0x02, 0x00, zone, 0x00, 0x04, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, volume]);
-    zone_volume([controller, zone, volume]);
+    sub_results = zone_volume([controller, zone, volume]);
+    return(sub_results);
   };
 
   function zone_bass(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], bass: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], bass: data[2]});
+    return(sub_results);
   }
   this.getZoneBass = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x05, 0x02, 0x00, zone, 0x00, 0x00, 0x00, 0x00]);
   };
   this.setZoneBass = function(controller, zone, bass) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x00, 0x05, 0x02, 0x00, zone, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, bass]);
-    zone_bass([controller, zone, bass]);
+    sub_results = zone_bass([controller, zone, bass]);
+    return(sub_results);
   };
 
   function zone_treble(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], treble: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], treble: data[2]});
+    return(sub_results);
   }
   this.getZoneTreble = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x05, 0x02, 0x00, zone, 0x00, 0x01, 0x00, 0x00]);
   };
   this.setZoneTreble = function(controller, zone, treble) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x00, 0x05, 0x02, 0x00, zone, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, treble]);
-    zone_treble([controller, zone, treble]);
+    sub_results = zone_treble([controller, zone, treble]);
+    return(sub_results);
   };
 
   function zone_loudness(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], loudness: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], loudness: data[2]});
+    return(sub_results);
   }
   this.getZoneLoudness = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x05, 0x02, 0x00, zone, 0x00, 0x02, 0x00, 0x00]);
   };
   this.setZoneLoudness = function(controller, zone, loudness) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x00, 0x05, 0x02, 0x00, zone, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, loudness]);
-    zone_loudness([controller, zone, loudness]);
+    sub_results = zone_loudness([controller, zone, loudness]);
+    return(sub_results);
   };
 
   function zone_balance(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], balance: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], balance: data[2]});
+    return(sub_results);
   }
   this.getZoneBalance = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x05, 0x02, 0x00, zone, 0x00, 0x03, 0x00, 0x00]);
   };
   this.setZoneBalance = function(controller, zone, balance) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x00, 0x05, 0x02, 0x00, zone, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, balance]);
-    zone_balance([controller, zone, balance]);
+    sub_results = zone_balance([controller, zone, balance]);
+    return(sub_results);
   };
 
   function zone_party_mode(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], partyMode: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], partyMode: data[2]});
+    return(sub_results);
   }
   this.getZonePartyMode = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x05, 0x02, 0x00, zone, 0x00, 0x07, 0x00, 0x00]);
   };
   this.setZonePartyMode = function(controller, zone, partyMode) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x00, 0x05, 0x02, 0x00, zone, 0x00, 0x07, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, partyMode]);
-    zone_party_mode([controller, zone, partyMode]);
+    sub_results = zone_party_mode([controller, zone, partyMode]);
+    return(sub_results);
   };
 
   function display_feedback(data) {
