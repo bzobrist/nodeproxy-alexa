@@ -1,0 +1,49 @@
+{
+  "port": 8088,
+  "authCode": "secret",
+  "rnet": {
+    "c-series": true,
+    "serialPort": "/dev/ttyUSB0",
+    "sources": [
+      "FM",
+      "Air",
+      "Laundry",
+      "Source 4",
+      "Source 5"
+    ],
+    "controllerConfig": {
+      "type": "discover",
+      "controllers": [
+        {
+          "controller": 0,
+          "zones": [
+            {
+              "zone": 0,
+              "name": "Main"
+            },
+            {
+              "zone": 1,
+              "name": "Kitchen"
+            },
+            {
+              "zone": 2,
+              "name": "Laundry"
+            },
+            {
+              "zone": 3,
+              "name": "Master"
+            },
+            {
+              "zone": 4,
+              "name": "Bonus"
+            },
+            {
+              "zone": 5,
+              "name": "Deck"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
