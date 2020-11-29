@@ -221,9 +221,10 @@ function Rnet() {
 
     if (!cmd || cmd.length == 0) { return; }
     //logger('TX > '+cmd);
-    device.write(buildCommand(cmd), function(err, results) {
+    sub_results = device.write(buildCommand(cmd), function(err, results) {
       if (err) logger('RNET write error: '+err);
     });
+    return(sub_results)
   }
 
   this.command = function(cmd) {
@@ -301,7 +302,8 @@ function Rnet() {
       doNotDisturb: data[12] });
   }
   this.getZone = function(controller, zone) {
-    write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x04, 0x02, 0x00, zone, 0x07, 0x00, 0x00]);
+    sub_results = write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x04, 0x02, 0x00, zone, 0x07, 0x00, 0x00]);
+    return(sub_results);
   };
   this.setAllZones = function(state) {
     write([0xF0, 0x7E, 0x00, 0x7F, 0x00, 0x00, byteFlag, 0x05, 0x02, 0x02, 0x00, 0x00, 0xF1, 0x22, 0x00, (cseries) ? state : 0x00, (cseries) ? 0x00 : state, 0x00, 0x00, 0x01]);
