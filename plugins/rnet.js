@@ -49,75 +49,93 @@ app.get('/discover', function (req, res) {
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/partyMode/:partyMode', function (req, res) {
-  rnet.setZonePartyMode(Number(req.params.controller), Number(req.params.zone), Number(req.params.partyMode));
+  results = rnet.setZonePartyMode(Number(req.params.controller), Number(req.params.zone), Number(req.params.partyMode));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/partyMode', function (req, res) {
-  rnet.getZonePartyMode(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZonePartyMode(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/balance/:balance', function (req, res) {
-  rnet.setZoneBalance(Number(req.params.controller), Number(req.params.zone), Number(req.params.balance));
+  results = rnet.setZoneBalance(Number(req.params.controller), Number(req.params.zone), Number(req.params.balance));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/balance', function (req, res) {
-  rnet.getZoneBalance(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneBalance(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/treble/:treble', function (req, res) {
-  rnet.setZoneTreble(Number(req.params.controller), Number(req.params.zone), Number(req.params.treble));
+  results = rnet.setZoneTreble(Number(req.params.controller), Number(req.params.zone), Number(req.params.treble));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/treble', function (req, res) {
-  rnet.getZoneTreble(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneTreble(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/bass/:bass', function (req, res) {
-  rnet.setZoneBass(Number(req.params.controller), Number(req.params.zone), Number(req.params.bass));
+  results = rnet.setZoneBass(Number(req.params.controller), Number(req.params.zone), Number(req.params.bass));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/bass', function (req, res) {
-  rnet.getZoneBass(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneBass(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/loudness/:loudness', function (req, res) {
-  rnet.setZoneLoudness(Number(req.params.controller), Number(req.params.zone), Number(req.params.loudness));
+  results = rnet.setZoneLoudness(Number(req.params.controller), Number(req.params.zone), Number(req.params.loudness));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/loudness', function (req, res) {
-  rnet.getZoneLoudness(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneLoudness(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/volume/:volume', function (req, res) {
-  rnet.setZoneVolume(Number(req.params.controller), Number(req.params.zone), Number(req.params.volume));
+  results = rnet.setZoneVolume(Number(req.params.controller), Number(req.params.zone), Number(req.params.volume));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/volume', function (req, res) {
-  rnet.getZoneVolume(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneVolume(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/source/:source', function (req, res) {
-  rnet.setZoneSource(Number(req.params.controller), Number(req.params.zone), Number(req.params.source));
+  results = rnet.setZoneSource(Number(req.params.controller), Number(req.params.zone), Number(req.params.source));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/source', function (req, res) {
-  rnet.getZoneSource(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneSource(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/state/:state', function (req, res) {
-  rnet.setZoneState(Number(req.params.controller), Number(req.params.zone), Number(req.params.state));
+  results = rnet.setZoneState(Number(req.params.controller), Number(req.params.zone), Number(req.params.state));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/state', function (req, res) {
-  rnet.getZoneState(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZoneState(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone/all/:state', function (req, res) {
-  rnet.setAllZones(Number(req.params.state));
+  results = rnet.setAllZones(Number(req.params.state));
+  res.send(results);
   res.end();
 });
 app.get('/controllers/:controller/zones/:zone', function (req, res) {
-  rnet.getZone(Number(req.params.controller), Number(req.params.zone));
+  results = rnet.getZone(Number(req.params.controller), Number(req.params.zone));
+  res.send(results);
   res.end();
 });
 
@@ -291,14 +309,16 @@ function Rnet() {
   };
 
   function zone_state(data) {
-    notify_handler({type: 'zone', controller: data[0], zone: data[1], state: data[2]});
+    sub_results = notify_handler({type: 'zone', controller: data[0], zone: data[1], state: data[2]});
+    return(sub_results);
   }
   this.getZoneState = function(controller, zone) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x01, 0x04, 0x02, 0x00, zone, 0x06, 0x00, 0x00]);
   };
   this.setZoneState = function(controller, zone, state) {
     write([0xF0, controller, 0x00, 0x7F, controller, (cseries) ? zone : 0x00, byteFlag, 0x05, 0x02, 0x02, 0x00, 0x00, 0xF1, 0x23, 0x00, state, 0x00, zone, 0x00, 0x01]);
-    zone_state([controller, zone, state]);
+    sub_results = zone_state([controller, zone, state]);
+    return(sub_results);
   };
 
   function zone_source(data) {
