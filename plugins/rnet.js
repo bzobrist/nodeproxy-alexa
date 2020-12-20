@@ -224,7 +224,7 @@ function Rnet() {
     sub_results = device.write(buildCommand(cmd), function(err, results) {
       if (err) logger('RNET write error: '+err);
     });
-    return(JSON.stringify(sub_results));
+    return(sub_results);
   }
 
   this.command = function(cmd) {
